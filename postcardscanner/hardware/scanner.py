@@ -1,13 +1,10 @@
 from postcardscanner.states import PostcardScannerState
 
 class Scanner():
-    def __init__(self, pins: dict, callback=None):
-        pass
-            
-    def stop(self):
+    def __init__(self, callback):
         pass
     
-    def simulate_scan(self, image):
+    def simulate_scan(self, image=None):
         pass
     
     def loop(self) -> PostcardScannerState:

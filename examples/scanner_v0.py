@@ -1,10 +1,8 @@
-import time
 from postcardscanner import PostcardScanner
 from postcardscanner.hardware import ScannerV0
 
-scanner = ScannerV0()
-
 def callback(image):
+    print('Received image')
     with open('img.jpg','wb') as out:
         out.write(image.read())
 

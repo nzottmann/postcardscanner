@@ -12,8 +12,12 @@ class PostcardScanner(threading.Thread):
         self.scanner = scanner
         super(PostcardScanner, self).__init__(daemon=True)
         
+    def simulate_scan(self, image=None):
+        self.scanner.simulate_scan(image)
+        
     def run(self):
         self.state = PostcardScannerState.enabled
+        logger.debug(f'state: {self.state}')
         while True:
             if self.state is PostcardScannerState.disabled:
                 continue

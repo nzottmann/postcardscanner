@@ -7,15 +7,14 @@ from .scanner import Scanner
 from postcardscanner.states import PostcardScannerState
 
 class ScannerV0(Scanner):
-    image = None 
-    def __init__(self, pins={
+    def __init__(self, callback, pins={
         'dir': 20,
         'step': 21,
         'mode': (14, 15, 18),
         's1': 5,
         's2': 6,
         'sensor_pwr': (13, 19)
-    }, callback=None):
+    }):
         self.pins = pins
         self.callback = callback
         GPIO.setwarnings(False)
@@ -43,9 +42,6 @@ class ScannerV0(Scanner):
             self.pos = 0
         else:
             self.pos = 3
-            
-    def stop(self):
-        self._init_state()
         
     def capture(self):
         process = subprocess.Popen(
@@ -54,9 +50,6 @@ class ScannerV0(Scanner):
             stderr=subprocess.DEVNULL
         )        
         return BytesIO(process.stdout.read())
-        
-    def last_image(self):
-        return self.image
     
     def loop(self):
         if self.pos == 0:
@@ -75,9 +68,7 @@ class ScannerV0(Scanner):
                 return PostcardScannerState.scanning
         if self.pos == 2:
             self.motor.motor_go(True, "1/8" , 32*20, .00001, False, 0)
-            self.image = self.capture()
-            if self.callback:
-                self.callback(self.image)
+            self.callback(self.capture())
             self.pos = 3
         if self.pos == 3:
             self.motor.motor_go(True, "1/8" , 32*200, .00001, False, 0)
