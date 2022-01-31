@@ -1,5 +1,5 @@
 from postcardscanner import PostcardScanner
-from postcardscanner.hardware import ScannerDemoCamera
+from postcardscanner.hardware.scanner_demo_camera import ScannerDemoCamera
 
 def callback(image):
     print('Received image')

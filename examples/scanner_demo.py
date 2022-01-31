@@ -1,6 +1,6 @@
 from io import BytesIO
 from postcardscanner import PostcardScanner
-from postcardscanner.hardware import ScannerDemo
+from postcardscanner.hardware.scanner_demo import ScannerDemo
 
 def callback(image):
     print('Received image')
