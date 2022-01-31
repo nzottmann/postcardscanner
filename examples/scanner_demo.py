@@ -11,7 +11,7 @@ scanner = PostcardScanner(scanner=ScannerDemo(callback=callback))
 scanner.start()
 
 # Input file will be returned by callback
-with open('examples/example.jpg','rb') as file:
+with open('example.jpg','rb') as file:
     image = BytesIO(file.read())
 scanner.simulate_scan(image)
 
