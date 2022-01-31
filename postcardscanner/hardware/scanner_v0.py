@@ -1,11 +1,13 @@
 import time
 from io import BytesIO
+import subprocess
 import RPi.GPIO as GPIO
 from RpiMotorLib import RpiMotorLib
 from .scanner import Scanner
 from postcardscanner.states import PostcardScannerState
 
-class ScannerV0(Scanner):    
+class ScannerV0(Scanner):
+    image = None 
     def __init__(self, pins={
         'dir': 20,
         'step': 21,
@@ -44,6 +46,17 @@ class ScannerV0(Scanner):
             
     def stop(self):
         self._init_state()
+        
+    def capture(self):
+        process = subprocess.Popen(
+            ['libcamera-still', '-n', '-t', '1', '-o', '-'],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.DEVNULL
+        )        
+        return BytesIO(process.stdout.read())
+        
+    def last_image(self):
+        return self.image
     
     def loop(self):
         if self.pos == 0:
@@ -62,9 +75,9 @@ class ScannerV0(Scanner):
                 return PostcardScannerState.scanning
         if self.pos == 2:
             self.motor.motor_go(True, "1/8" , 32*20, .00001, False, 0)
-            time.sleep(2)
+            self.image = self.capture()
             if self.callback:
-                self.callback(None)
+                self.callback(self.image)
             self.pos = 3
         if self.pos == 3:
             self.motor.motor_go(True, "1/8" , 32*200, .00001, False, 0)

@@ -1,22 +1,25 @@
 import logging
 logger = logging.getLogger('postcardscanner')
 logging.basicConfig(level=logging.DEBUG)
+import threading
+from .states import PostcardScannerState
+from .hardware.scanner import Scanner
 
-from .thread import PostcardscannerThread
-
-class PostcardScanner:
-    def __init__(self, scanner):
-        self.thread = PostcardscannerThread(scanner)
-        self.thread.start()
-        
-    def start(self):
-        self.thread.enable()
+class PostcardScanner(threading.Thread):
+    state = PostcardScannerState.disabled
     
-    def stop(self):
-        self.thread.disable()
+    def __init__(self, scanner: Scanner):
+        self.scanner = scanner
+        super(PostcardScanner, self).__init__(daemon=True)
         
-    def get_last_card(self):
-        return None
-        
-    def simulate_scan(self, image=None):
-        self.thread.simulate_scan(image)
+    def run(self):
+        self.state = PostcardScannerState.enabled
+        while True:
+            if self.state is PostcardScannerState.disabled:
+                continue
+            
+            new_state = self.scanner.loop()
+            if new_state is not self.state:
+                logger.debug(f'state: {new_state}')
+                self.state = new_state
+                
