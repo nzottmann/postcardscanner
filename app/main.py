@@ -32,7 +32,7 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    return 'postcardscanner'
+    return os.path.getctime('img.jpg')
 
 @app.get("/last_postcard")
 async def root():
