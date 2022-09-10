@@ -32,21 +32,14 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    return os.path.getctime('img.jpg')
-    
+    return 'postcardscanner'
+
 @app.get("/last_postcard")
 async def root():
     with open('img.jpg', 'rb') as f:
         base64image = base64.b64encode(f.read())
     return base64image
-   #return FileResponse('img.jpg')
 
-@app.get("last_postcard")
-async def root():
-    with open('img.jpg', 'rb') as f:
-        base64image = base64.b64encode(f.read())
-    return base64image
-
-@app.get("last_postcard_timestamp")
+@app.get("/last_postcard_timestamp")
 async def root():
     return os.path.getctime('img.jpg')
