@@ -30,7 +30,7 @@ app.add_middleware(
 
 @app.get("/")
 async def root():
-    return os.path.getctime('img.jpg')
+    return 'Use routes /last_postcard or /last_postcard_timestamp'
 
 @app.get("/last_postcard")
 async def root():
