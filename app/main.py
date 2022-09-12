@@ -3,6 +3,10 @@ from postcardscanner.hardware.scanner_v1 import ScannerV1
 
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
+
+import base64
+import os
 
 def callback(image):
     print('Received image')
@@ -15,11 +19,25 @@ scanner.start()
 
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.get("/")
 async def root():
-    return {"message": "Get last postcard from /last_postcard"}
+    return 'Use routes /last_postcard or /last_postcard_timestamp'
 
 @app.get("/last_postcard")
 async def root():
-    return FileResponse('img.jpg')
+    with open('img.jpg', 'rb') as f:
+        base64image = base64.b64encode(f.read())
+    return base64image
+
+@app.get("/last_postcard_timestamp")
+async def root():
+    return os.path.getctime('img.jpg')

@@ -1,3 +1,5 @@
+import logging
+logger = logging.getLogger('scanner_v1')
 import time
 from io import BytesIO
 import subprocess
@@ -102,7 +104,10 @@ class ScannerV1(Scanner):
                 self.motor.motor_go(not self.clockwise, self.steptype_1, 100, self.stepdelay, False, 0)
                 self._mot_sleep(0)
                 self._led(1)
-                self.callback(self.capture())
+                try:
+                    self.callback(self.capture())
+                except Exception as e:
+                    logger.error(f'Capture callback raised exception: {e}')
                 self._led(0)
                 self._mot_sleep(1)
                 #time.sleep(1)
