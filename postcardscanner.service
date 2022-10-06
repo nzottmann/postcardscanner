@@ -5,7 +5,7 @@ Description=postcardscanner
 Type=simple
 WorkingDirectory=/home/pi/postcardscanner/app
 User=pi
-ExecStart=/usr/bin/python3 -m uvicorn main:app --host 0.0.0.0
+ExecStart=/home/pi/postcardscanner/venv/bin/python3 -m uvicorn main:app --host 0.0.0.0
 Restart=always
 RestartSec=5s
 
