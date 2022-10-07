@@ -1,5 +1,5 @@
 from postcardscanner import PostcardScanner
-from postcardscanner.hardware.scanner_v1 import ScannerV1
+from postcardscanner.hardware.scanner_v2 import ScannerV2
 
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
@@ -13,7 +13,7 @@ def callback(image):
     with open('img.jpg','wb') as out:
         out.write(image.read())
 
-scanner = PostcardScanner(scanner=ScannerV1(callback=callback))
+scanner = PostcardScanner(scanner=ScannerV2(callback=callback))
 scanner.start()
 
 
