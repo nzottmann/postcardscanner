@@ -1,5 +1,7 @@
 Python library for postcard scanner
 
+Licensed under the [EUPL-1.2-or-later](https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12)
+
 # Installation
 Installation manual is for Raspberry Pi OS, bullseye, Release date: 2022-09-22, tested on Pi4
 - Clone this repo and install requirements in a venv
