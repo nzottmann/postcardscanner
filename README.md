@@ -1,6 +1,9 @@
-Python library for postcard scanner
+Python app for postcard scanner
 
 Licensed under the [EUPL-1.2-or-later](https://joinup.ec.europa.eu/collection/eupl/eupl-text-eupl-12)
+
+- Hardware: https://github.com/nzottmann/postcardscanner-hardware
+- Python module: https://github.com/nzottmann/postcardscanner-python
 
 # Installation
 Installation manual is for Raspberry Pi OS, bullseye, Release date: 2022-09-22, tested on Pi4
