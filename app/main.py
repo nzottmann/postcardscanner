@@ -2,7 +2,7 @@
 # Licensed under the EUPL-1.2-or-later
 
 from postcardscanner import PostcardScanner
-from postcardscanner.hardware.scanner_v2 import ScannerV2
+from postcardscanner.hardware.scanner_v3 import ScannerV3
 
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
@@ -14,9 +14,9 @@ import os
 def callback(image):
     print('Received image')
     with open('img.jpg','wb') as out:
-        out.write(image.read())
+        out.write(image.getbuffer())
 
-scanner = PostcardScanner(scanner=ScannerV2(callback=callback))
+scanner = PostcardScanner(scanner=ScannerV3(callback=callback))
 scanner.start()
 
 
