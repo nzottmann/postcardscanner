@@ -36,11 +36,21 @@ async def root():
     return 'Use routes /last_postcard or /last_postcard_timestamp'
 
 @app.get("/last_postcard")
-async def root():
+async def last_postcard():
     with open('img.jpg', 'rb') as f:
         base64image = base64.b64encode(f.read())
     return base64image
 
 @app.get("/last_postcard_timestamp")
-async def root():
+async def last_postcard_timestamp():
     return os.path.getctime('img.jpg')
+
+@app.get("/accept_postcard", status_code=204)
+async def accept_postcard():
+    scanner.accept_postcard()
+    return 
+
+@app.get("/reject_postcard", status_code=204)
+async def reject_postcard():
+    scanner.reject_postcard()
+    return 
