@@ -37,3 +37,9 @@ Installation manual is for Raspberry Pi OS, bullseye, Release date: 2022-09-22, 
 :point_up: Adjust paths in `postcardscanner.service` if cloning to other path than `/home/pi`
 
 :point_up: Make sure `app/main.py` uses the scanner version matching your hardware revision
+
+# Live preview for debugging
+- Switch to a text console or stop the X server with `pkill X`
+- Switch the light on `raspi-gpio set 12 op dh`
+- Start live preview `libcamera-hello -t 0`, cancel with Ctrl+C
+- Switch the light off `raspi-gpio set 12 op dl`
